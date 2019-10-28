@@ -44,7 +44,6 @@ class NeuralNetwork:
         for i in range(len(self.weights), 0, -1):
             errors[i - 1] = np.matmul(np.transpose(self.weights[i - 1]), errors[i])
             temp = errors[i] * self.activation_derivative(z[i])
-            # print("biases", np.shape(self.biases[i - 1]), "weights", np.shape(self.weights[i - 1]), "temp", np.shape(temp), "a", np.shape(a[i - 1]))
             delta_weights[i - 1]= np.matmul(temp, np.transpose(a[i - 1])) * self.learning_rate
             delta_biases[i - 1] = temp * self.learning_rate
             self.weights[i - 1] += delta_weights[i - 1]
@@ -54,10 +53,23 @@ class NeuralNetwork:
         return [self.predict(inp) for inp in inputs]
 
     def train_set(self, inputs, targets, epoch=1):
+        percent = 0
         for i in range(epoch):
+            while i / epoch > percent:
+                print(int(np.round(percent * 100)), "percent done")
+                percent += .1
+            inputs, targets = NeuralNetwork.shuffle(inputs, targets)
             for inp, target in zip(inputs, targets):
                 self.train(inp, target)
+        print("100 percent done")
 
     @staticmethod
     def derivative(f, h=0.0001):
         return lambda x: (f(x + h / 2) - f(x - h / 2)) / h
+
+    @staticmethod
+    def shuffle(a, b):
+        a = np.array(a)
+        b = np.array(b)
+        p = np.random.permutation(len(a))
+        return a[p].tolist(), b[p].tolist()
