@@ -9,11 +9,12 @@ import numpy as np
 labels = None
 dataset = None
 
-epoch = 1000
+epoch = 100
+college_name = 'GeorgiaTech'
+tag = "addingdata"
 
 names = ['Cornell', 'GeorgiaTech', 'Illinois', 'UMD', 'UMich']
 
-college_name = 'GeorgiaTech'
 
 datasets = {}
 labels = {}
@@ -41,7 +42,7 @@ with open('./data/College Data - ' + college_name + '.csv') as f:
 results, in_func, out_func = pp.preprocess(datasets[college_name])
 
 
-nn = NeuralNetwork([len(results[0][0]), 4, len(results[0][1])])
+nn = NeuralNetwork([len(results[0][0]), 6, 6, len(results[0][1])])
 nn.train_set([pp.to_column(r[0]) for r in results], [pp.to_column(r[1]) for r in results], epoch)
 
 class Model:
@@ -54,6 +55,6 @@ class Model:
         return self.out_func(self.nn.predict(self.in_func(inputs)))
 
 model = Model(nn, in_func, out_func)
-with open('./models/model-' + str(epoch) + "-" + str(int(time.time())) + '.pkl', 'wb') as f:
+with open('./models/model-' + college_name + "-" + ((tag + "-") if tag != None else "") + str(epoch) + "-" + str(int(time.time())) + '.pkl', 'wb') as f:
     pickle.dump(model, f) 
         

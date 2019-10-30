@@ -18,14 +18,16 @@ def preprocess(data_orig):
         d = data[i]
         years.append(int(d[8]))
         acts.append(max((sat_to_act(int(d[6])) if d[6].isdigit() else 0, int(d[7]) if d[7].isdigit() else 0)))
-        if d[1] in ['Unknown', 'Incomplete', 'No decision', 'Guar. Transfer', 'Withdrawn']:
+        if d[1] in ['Unknown', 'Incomplete', 'No decision', 'Guar. Transfer', 'Withdrawn'] or (d[6] == '-' and d[7] == '-'):
             del data[i]
             i -= 1
             continue
-        if d[1] in ['Waitlisted', 'Deferred']:
+        if d[1] in ['Waitlisted', 'Deferred'] or 'Admit' in d[1] or 'Accept' in d[1]:
             data[i][1] = 'Accepted'
         if d[0] == "PRI":
             data[i][0] = "EA"
+        if d[0] == "ROLL":
+            data[i][0] = "RD"
         if d[0] not in types:
             types.append(d[0])
         if d[1] not in results:
@@ -45,8 +47,25 @@ def preprocess(data_orig):
         output = one_hot(d[2], results)
         del d[2]
         d[4] = int(d[4]) - min(years)
-        # print(d, output)
         result.append((d, output))
+
+    def in_func(x_orig):
+        x = one_hot(x_orig[0], types)
+        x.append(float(x_orig[1]) / 5)
+        x.append(norm(max((sat_to_act(int(x_orig[2])) if x_orig[2].isdigit() else 0, int(x_orig[3]) if x_orig[3].isdigit() else 0)), acts))
+        x.append(int(x_orig[4]) - min(years))
+        return to_column(x)
+
+    def out_func(y_orig):
+        y_orig = np.transpose(y_orig).tolist()[0]
+        i = y_orig.index(max(y_orig))
+        return results[i], soft_max(i, y_orig)
+
+    for i in range(0, 37, 5):
+        for j in np.arange(0, 5, 1):
+            i = in_func([np.random.choice(types), str(j), '-', str(i), str(np.random.choice(years))])
+            o = one_hot("Denied", results)
+            result.append((i, o))
 
     count = np.zeros_like(result[0][1])
 
@@ -67,17 +86,13 @@ def preprocess(data_orig):
 
     result.extend(a)
 
-    def in_func(x_orig):
-        x = one_hot(x_orig[0], types)
-        x.append(float(x_orig[1]) / 5)
-        x.append(norm(max((sat_to_act(int(x_orig[2])) if x_orig[2].isdigit() else 0, int(x_orig[3]) if x_orig[3].isdigit() else 0)), acts))
-        x.append(int(x_orig[4]) - min(years))
-        return to_column(x)
+    count = np.zeros_like(result[0][1])
 
-    def out_func(y_orig):
-        y_orig = np.transpose(y_orig).tolist()[0]
-        i = y_orig.index(max(y_orig))
-        return results[i], soft_max(i, y_orig)
+    for r in result:
+        count += np.array(r[1])
+
+    count = count.tolist()
+    print(count, results)
 
     return result, in_func, out_func
 

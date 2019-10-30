@@ -27,6 +27,7 @@ with open('./data/College Data - ' + college_name + '.csv') as f:
             sats.append(int(d[6]))
         if d[7].isdigit():
             acts.append(int(d[7]))
+
     print(min(sats), sum(sats) / len(sats), max(sats), max(set(sats), key=sats.count))
     print(min(acts), sum(acts) / len(acts), max(acts), max(set(acts), key=acts.count))
     print(min(gpas), sum(gpas) / len(gpas), max(gpas), max(set(gpas), key=gpas.count))
