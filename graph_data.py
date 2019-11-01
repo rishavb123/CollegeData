@@ -39,5 +39,5 @@ with open('./data/College Data - ' + college_name + '.csv') as f:
     # plt.hist(sats)
     # plt.hist(acts)
     # plt.hist([sat_to_act(sat) for sat in sats] + acts)
-    plt.scatter([float(d[5]) for d in dataset], [max(sat_to_act(d[6]) if d[6].isdigit() else 0, int(d[7]) if d[7].isdigit() else 0) for d in dataset], c=['green' if d[1] in ['Accepted', 'Waitlisted', 'Deferred'] else 'red' if d[1] == 'Denied' else 'yellow' for d in dataset])
+    plt.scatter([max(sat_to_act(d[6]) if d[6].isdigit() else 0, int(d[7]) if d[7].isdigit() else 0) for d in dataset], [float(d[5]) for d in dataset], c=['green' if d[1] in ['Accepted', 'Waitlisted', 'Deferred'] else 'red' if d[1] == 'Denied' else 'yellow' for d in dataset])
     plt.show()

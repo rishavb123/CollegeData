@@ -1,5 +1,6 @@
 import csv
 import matplotlib.pyplot as plt
+import preprocessing as pp
 from sat_to_act import sat_to_act
 
 labels = None
@@ -27,18 +28,11 @@ with open('./data/College Data - ' + college_name + '.csv') as f:
             sats.append(int(d[6]))
         if d[7].isdigit():
             acts.append(int(d[7]))
-
     print(min(sats), sum(sats) / len(sats), max(sats), max(set(sats), key=sats.count))
     print(min(acts), sum(acts) / len(acts), max(acts), max(set(acts), key=acts.count))
     print(min(gpas), sum(gpas) / len(gpas), max(gpas), max(set(gpas), key=gpas.count))
-    # fig, axs = plt.subplots(1, 4, figsize=(20, 10))
-    # axs[0].hist(sats)
-    # axs[1].hist(acts)
-    # axs[2].hist([sat_to_act(sat) for sat in sats] + acts)
-    # axs[3].scatter([float(d[5]) for d in dataset], [max(sat_to_act(d[6]) if d[6].isdigit() else 0, int(d[7]) if d[7].isdigit() else 0) for d in dataset], c=['green' if d[1] in ['Accepted', 'Waitlisted', 'Deferred'] else 'red' if d[1] == 'Denied' else 'yellow' for d in dataset])
     
-    # plt.hist(sats)
-    # plt.hist(acts)
-    # plt.hist([sat_to_act(sat) for sat in sats] + acts)
-    plt.scatter([float(d[5]) for d in dataset], [max(sat_to_act(d[6]) if d[6].isdigit() else 0, int(d[7]) if d[7].isdigit() else 0) for d in dataset], c=['green' if d[1] in ['Accepted', 'Waitlisted', 'Deferred'] else 'red' if d[1] == 'Denied' else 'yellow' for d in dataset])
+    results, in_func, out_func = pp.preprocess(dataset)
+
+    plt.scatter([r[0][2] for r in results], [r[0][3] for r in results], c=['green' if r[1][1] == 1 else 'red' for r in results])
     plt.show()

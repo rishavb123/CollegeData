@@ -7,6 +7,9 @@ def preprocess(data_orig):
 
 
     acts = []
+    gpas = []
+    parallel_results = []
+
     types = []
     results = []
     attends = []
@@ -17,7 +20,7 @@ def preprocess(data_orig):
             break
         d = data[i]
         years.append(int(d[8]))
-        acts.append(max((sat_to_act(int(d[6])) if d[6].isdigit() else 0, int(d[7]) if d[7].isdigit() else 0)))
+        
         if d[1] in ['Unknown', 'Incomplete', 'No decision', 'Guar. Transfer', 'Withdrawn'] or (d[6] == '-' and d[7] == '-'):
             del data[i]
             i -= 1
@@ -34,6 +37,11 @@ def preprocess(data_orig):
             results.append(d[1])
         if d[4] not in attends:
             attends.append(d[4])
+
+        gpas.append(float(d[5]))
+        acts.append(max((sat_to_act(int(d[6])) if d[6].isdigit() else 0, int(d[7]) if d[7].isdigit() else 0)))
+        parallel_results.append(data[i][1])
+
         i += 1
 
     result = []
@@ -61,11 +69,16 @@ def preprocess(data_orig):
         i = y_orig.index(max(y_orig))
         return results[i], soft_max(i, y_orig)
 
-    for i in range(0, 37, 5):
+    for i in range(0, 37, 1):
         for j in np.arange(0, 5, 1):
-            i = in_func([np.random.choice(types), str(j), '-', str(i), str(np.random.choice(years))])
-            o = one_hot("Denied", results)
-            result.append((i, o))
+            inp = in_func([np.random.choice(types), str(j), '-', str(i), str(np.random.choice(years))])
+            r = "Denied"
+            r1 = gpas.index(min(gpas, key=lambda x: np.abs(j - x)))
+            r2 = acts.index(min(acts, key=lambda x: np.abs(i - x)))
+            if parallel_results[r1] == "Accepted" and parallel_results[r2] == "Accepted":
+                r = "Accepted"
+            out = one_hot(r, results)
+            result.append((inp, out))
 
     count = np.zeros_like(result[0][1])
 
@@ -92,7 +105,6 @@ def preprocess(data_orig):
         count += np.array(r[1])
 
     count = count.tolist()
-    print(count, results)
 
     return result, in_func, out_func
 
