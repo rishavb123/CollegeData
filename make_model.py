@@ -10,8 +10,8 @@ labels = None
 dataset = None
 
 epoch = 100
-college_name = 'UMD'
-tag = "addingdatausingclosest"
+college_name = 'GeorgiaTech'
+tag = ""
 
 names = ['Cornell', 'GeorgiaTech', 'Illinois', 'UMD', 'UMich']
 
