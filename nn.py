@@ -14,8 +14,8 @@ class NeuralNetwork:
         self.biases = []
 
         for i in range(len(self.shape) - 1):
-            self.weights.append(np.random.random([self.shape[i + 1], self.shape[i]]))
-            self.biases.append(np.random.random([self.shape[i + 1], 1]))
+            self.weights.append(np.random.random([self.shape[i + 1], self.shape[i]]) * 2 - 1)
+            self.biases.append(np.random.random([self.shape[i + 1], 1]) * 2 - 1)
 
         self.learning_rate = learning_rate
 
@@ -63,6 +63,18 @@ class NeuralNetwork:
                 self.train(inp, target)
         print("100 percent done")
 
+    def mutate(self, mutation_rate):
+        for weight, bias in zip(self.weights, self.biases):
+            for i in range(len(weight)):
+                for j in range(len(weight[i])):
+                    if np.random.random() < mutation_rate:
+                        weight[i][j] = weight[i][j] + np.random.random() * 0.5 - 0.25
+
+            for i in range(len(bias)):
+                if np.random.random() < mutation_rate:
+                    bias[i] = np.random.random() * 2 - 1
+        return self
+
     @staticmethod
     def derivative(f, h=0.0001):
         return lambda x: (f(x + h / 2) - f(x - h / 2)) / h
@@ -73,3 +85,21 @@ class NeuralNetwork:
         b = np.array(b)
         p = np.random.permutation(len(a))
         return a[p].tolist(), b[p].tolist()
+
+    @staticmethod
+    def crossover(nn1, nn2):
+        if nn1.shape != nn2.shape:
+            return None
+        nn = NeuralNetwork(nn1.shape)
+        for i in range(len(nn1.weights)):
+            nn.weights[i] = np.add(nn1.weights[i], nn2.weights[i]) / 2
+            nn.biases[i] = np.add(nn1.biases[i], nn2.biases[i]) / 2
+        return nn
+
+    @staticmethod
+    def clone(nn):
+        nn2 = NeuralNetwork(nn.shape)
+        for i in range(len(nn.weights)):
+            nn2.weights[i] = nn.weights[i].copy()
+            nn2.biases[i] = nn.biases[i].copy()
+        return nn
