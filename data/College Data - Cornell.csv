@@ -22,7 +22,6 @@ RD,Denied,,,No,4.479,1560,-,2019
 ED,Denied,,,No,4.186,-,33,2019
 RD,Denied,,,No,4.336,1550,-,2019
 RD,Incomplete,,,No,4.009,1480,-,2019
-EA,Incomplete,,,No,3.956,-,-,2019
 RD,Denied,,,Unknown,4.283,1500,33,2019
 RD,Denied,,,No,3.905,1420,-,2019
 RD,Unknown,,,No,4.413,1540,-,2019
@@ -32,7 +31,6 @@ RD,Waitlisted,Yes,,No,4.413,1510,34,2019
 RD,Accepted,,,Unknown,4.323,1530,-,2019
 ED,Denied,,,No,3.685,1250,22,2019
 RD,Denied,,,No,4.085,-,30,2019
-EA,Denied,,,No,4.083,1570,-,2019
 RD,Denied,,,No,4.012,1520,-,2019
 RD,Accepted,,,No,4.538,1550,-,2019
 RD,No decision,,,No,4.11,1500,-,2019
@@ -53,7 +51,6 @@ RD,Denied,,,No,4.135,1480,32,2019
 RD,Denied,,,No,3.804,1480,-,2019
 ED,Denied,,,No,4.208,1550,-,2019
 RD,Denied,,,No,4.201,1460,35,2019
-EA,Denied,,,No,3.998,1570,-,2019
 RD,Denied,,,No,3.973,1460,-,2019
 RD,Incomplete,,,No,3.262,1480,30,2019
 RD,Denied,,,No,4.042,-,34,2019
@@ -61,7 +58,6 @@ ED,Guar. Transfer,,,No,4.147,1490,33,2019
 RD,Waitlisted,Yes,,No,4.452,1470,35,2019
 RD,Denied,,,No,4.006,1400,32,2019
 RD,Denied,,,No,3.927,-,25,2019
-EA,Denied,,,Unknown,4.126,1230,-,2019
 RD,Incomplete,,,Unknown,4.26,1460,30,2019
 RD,Unknown,,,No,4.016,-,31,2019
 RD,Waitlisted,Yes,,No,4.536,1600,34,2019
@@ -118,7 +114,6 @@ RD,Waitlisted,Yes,,No,4.302,1520,35,2018
 RD,Denied,,,No,4.195,1460,29,2018
 RD,Denied,,,No,4.327,1490,34,2018
 ED,Denied,,,No,3.806,-,33,2018
-EA,Denied,,,No,4.028,1390,-,2018
 RD,Denied,,,No,4.175,1540,35,2018
 ED,Denied,,,No,4.028,1450,29,2018
 RD,Unknown,,,No,4.479,1510,35,2018
@@ -140,7 +135,6 @@ RD,Denied,,,No,3.906,-,35,2018
 ED,Incomplete,,,No,3.867,1500,33,2018
 RD,Waitlisted,Yes,,No,4.431,1580,-,2018
 RD,No decision,Yes,,No,4.377,-,32,2018
-EA,Denied,,,No,4.038,1440,31,2018
 RD,Accepted,,,Yes,4.292,1550,-,2018
 RD,Denied,,,No,4.25,1500,34,2018
 RD,Denied,,,No,3.486,1300,25,2018
@@ -162,7 +156,6 @@ ED,Denied,,,No,3.817,1400,31,2018
 RD,Denied,,,No,4.299,1550,33,2018
 RD,Denied,,,No,3.833,1420,-,2018
 RD,Withdrawn,,,No,4.264,1520,32,2018
-EA,Incomplete,,,No,3.729,-,27,2018
 RD,Waitlisted,Yes,,No,4.39,1500,-,2018
 RD,Denied,,,No,3.397,1380,-,2018
 RD,Denied,,,No,4,1500,-,2018
@@ -173,7 +166,6 @@ RD,Accepted,,,Yes,4.226,1520,-,2018
 RD,Waitlisted,Yes,,No,4.424,1490,35,2018
 RD,Incomplete,,,No,3.907,1420,30,2018
 RD,Incomplete,,,No,3.612,1440,-,2018
-EA,Denied,,,No,4.058,1430,30,2018
 RD,Denied,,,No,3.903,1510,-,2018
 RD,Incomplete,,,No,3.727,1510,31,2018
 RD,Incomplete,,,No,4.042,1510,35,2018
