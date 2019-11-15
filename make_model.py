@@ -6,12 +6,11 @@ import matplotlib.pyplot as plt
 from nn import NeuralNetwork
 import numpy as np
 from savgol_filter import savgol_filter
-# import json
 
 labels = None
 dataset = None
 
-save = False
+save = True
 plot = True
 
 epoch = 100
