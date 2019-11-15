@@ -10,7 +10,7 @@ labels = None
 dataset = None
 
 epoch = 100
-college_name = 'Cornell'
+college_name = 'UMich'
 tag = ""
 
 names = ['Cornell', 'GeorgiaTech', 'Illinois', 'UMD', 'UMich']

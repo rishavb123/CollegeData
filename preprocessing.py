@@ -18,6 +18,7 @@ def preprocess(data_orig):
     while True:
         if i >= len(data):
             break
+        
         d = data[i]
         years.append(int(d[8]))
         
@@ -58,6 +59,10 @@ def preprocess(data_orig):
         result.append((d, output))
 
     def in_func(x_orig):
+        if x_orig[0] == "PRI":
+            x_orig[0] = "EA"
+        elif x_orig[0] == "ROLL":
+            x_orig[0] = "RD"
         x = one_hot(x_orig[0], types)
         x.append(float(x_orig[1]) / 5)
         x.append(norm(max((sat_to_act(int(x_orig[2])) if x_orig[2].isdigit() else 0, int(x_orig[3]) if x_orig[3].isdigit() else 0)), acts))
