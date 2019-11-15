@@ -26,7 +26,10 @@ class NeuralNetwork:
         return a
 
     def train(self, inp, target):
+        loss = []
+
         target = np.array(target)
+
         a = [np.array(inp)]
         z = [a[0]]
         i = 0
@@ -52,8 +55,9 @@ class NeuralNetwork:
     def predict_set(self, inputs):
         return [self.predict(inp) for inp in inputs]
 
-    def train_set(self, inputs, targets, epoch=1):
+    def train_set(self, inputs, targets, epoch=1, with_cost=False):
         percent = 0
+        costs = []
         for i in range(epoch):
             while i / epoch > percent:
                 print(int(np.round(percent * 100)), "percent done")
@@ -61,7 +65,15 @@ class NeuralNetwork:
             inputs, targets = NeuralNetwork.shuffle(inputs, targets)
             for inp, target in zip(inputs, targets):
                 self.train(inp, target)
+            costs.append(self.cost(inputs, targets))
         print("100 percent done")
+        return costs if len(costs) > 0 else None
+    
+    def loss(self, inp, target):
+        return sum((self.predict(inp) - target) ** 2)
+
+    def cost(self, inputs, targets):
+        return sum([self.loss(inp, target) for inp, target in zip(inputs, targets)]) / len(inputs)
 
     def mutate(self, mutation_rate):
         for weight, bias in zip(self.weights, self.biases):
