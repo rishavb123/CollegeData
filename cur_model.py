@@ -8,7 +8,7 @@ model_file = models[-1]
 
 def find_model(name):
     name = name.replace("University of ", "U").replace("Technology", "Tech").replace("UIUC", "Illinois").replace("Maryland", "MD")
-    print(name)
+
     for m in models:
         if m.split("-")[1].lower().replace(" ", "") == name.lower().replace(" ", ""):
             return m
