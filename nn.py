@@ -3,7 +3,10 @@ import numpy as np
 class NeuralNetwork:
     
     relu = lambda x: x * (x > 0)
+    leeky_relu = lambda x: max(0.1 * x, x)
+    linear = lambda x:x
     sigmoid = lambda x: 1 / (1 + np.exp(-x))
+    tanh = lambda x: np.tanh(x)
 
     def __init__(self, shape, activation=sigmoid, learning_rate=0.1):
         self.shape = shape
