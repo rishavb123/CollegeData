@@ -10,6 +10,18 @@ class NeuralNetwork:
 
     def __init__(self, shape, activation=sigmoid, learning_rate=0.1):
         self.shape = shape
+        if isinstance(activation, str):
+            if activation == 'relu':
+                activation = NeuralNetwork.relu
+            elif activation == 'leeky_relu':
+                activation = NeuralNetwork.leeky_relu
+            elif activation == 'linear':
+                activation = NeuralNetwork.linear
+            elif activation == 'tanh':
+                activation = NeuralNetwork.tanh
+            else:
+                activation = NeuralNetwork.sigmoid
+
         self.activation = np.vectorize(activation)
         self.activation_derivative = np.vectorize(NeuralNetwork.derivative(activation))
 

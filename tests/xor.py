@@ -17,7 +17,7 @@ targets = [
     [[1], [0]]
 ]
 
-nn = NeuralNetwork([2, 4, 2], activation=NeuralNetwork.relu)
+nn = NeuralNetwork([2, 4, 2], activation='relu')
 nn.train_set(inputs, targets, epoch=10000)
 
 for inp, tar in zip(inputs, targets):
