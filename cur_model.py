@@ -1,14 +1,20 @@
-# model_file = "./models/model-GeorgiaTech-100-1572632288.pkl"
-# model_file = "./models/model-UMD-100-1572631031.pkl"
-# model_file = "./models/model-Cornell--100-1573586686.pkl"
-# model_file = "./models/model-Illinois--100-1573757349.pkl"
-# model_file = "./models/model-UMich--100-1573758017.pkl"
-models = ["./models/model-Cornell--100-1573586686.pkl", "./models/model-GeorgiaTech-100-1572632288.pkl", "./models/model-Illinois--100-1573757349.pkl", "./models/model-UMD-100-1572631031.pkl", "./models/model-UMich--100-1573758017.pkl"]
-model_file = models[-1]
+import os
+
+model_file = "./models/model-tf-UMD--100-1573864974.pkl"
+
+
+path = './models/'
+
+models = []
+
+# r=root, d=directories, f = files
+for r, d, f in os.walk(path):
+    for file in f:
+        models.append(os.path.join(r, file))
 
 def find_model(name):
     name = name.replace("University of ", "U").replace("Technology", "Tech").replace("UIUC", "Illinois").replace("Maryland", "MD")
 
     for m in models:
-        if m.split("-")[1].lower().replace(" ", "") == name.lower().replace(" ", ""):
+        if m.split("-")[1].lower().replace(" ", "") == name.lower().replace(" ", "") or m.split("-")[2].lower().replace(" ", "") == name.lower().replace(" ", ""):
             return m
