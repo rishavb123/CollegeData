@@ -122,6 +122,9 @@ def soft_max(i, arr):
 def to_column(arr):
     return np.reshape(arr, (len(arr), 1))
 
+def to_row(arr):
+    return np.reshape(arr, (len(arr)))
+
 def one_hot(a, arr):
     index = arr.index(a)
     a = []
