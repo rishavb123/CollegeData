@@ -11,14 +11,16 @@ inputs = [
 ]
 
 targets = [
-    [0],
-    [0],
-    [1],
-    [1]
+    [[0], [1]],
+    [[0], [0]],
+    [[1], [0]],
+    [[1], [0]]
 ]
 
-nn = NeuralNetwork([2, 4, 1])
+nn = NeuralNetwork([2, 4, 2])
 nn.train_set(inputs, targets, epoch=10000)
 
 for inp in inputs:
     print(inp[0], inp[1], ":", nn.predict(inp))
+
+print(nn.evaluate(inputs, targets))

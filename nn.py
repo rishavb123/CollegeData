@@ -68,6 +68,17 @@ class NeuralNetwork:
             costs.append(self.cost(inputs, targets))
         print("100 percent done")
         return costs if len(costs) > 0 else None
+
+    def evaluate_classification(self, inputs, targets):
+        outputs = self.predict_set(inputs)
+        correct = 0
+        for out, tar in zip(outputs, targets):
+            if list(out).index(max(out)) == list(tar).index(max(tar)):
+                correct += 1
+        return [self.cost(inputs, targets)[0], correct / len(outputs)] # cost, accuracy
+
+    def evaluate_regression(self, inputs, targets):
+        return self.cost(inputs, targets) # cost
     
     def loss(self, inp, target):
         return sum((self.predict(inp) - target) ** 2)
