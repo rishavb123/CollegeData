@@ -6,7 +6,7 @@ import numpy as np
 labels = None
 dataset = None
 
-college_name = 'Illinois'
+college_name = 'UMich'
 
 with open('./data/College Data - ' + college_name + '.csv') as f:
     data = csv.reader(f)

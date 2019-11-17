@@ -6,7 +6,7 @@ from sat_to_act import sat_to_act
 labels = None
 dataset = None
 
-college_name = 'Illinois'
+college_name = 'GeorgiaTech'
 
 with open('./data/College Data - ' + college_name + '.csv') as f:
     data = csv.reader(f)
