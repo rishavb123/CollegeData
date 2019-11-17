@@ -90,8 +90,11 @@ class NeuralNetwork:
         outputs = self.predict_set(inputs)
         correct = 0
         for out, tar in zip(outputs, targets):
-            if list(out).index(max(out)) == list(tar).index(max(tar)):
-                correct += 1
+            try:
+                if list(out).index(max(out)) == list(tar).index(max(tar)):
+                    correct += 1
+            except:
+                print("Hit nan; out:", max(out), "tar:", max(tar))
         return [self.cost(inputs, targets)[0], correct / len(outputs)] # cost, accuracy
 
     def evaluate_regression(self, inputs, targets):
