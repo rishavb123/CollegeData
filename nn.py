@@ -70,18 +70,20 @@ class NeuralNetwork:
     def predict_set(self, inputs):
         return [self.predict(inp) for inp in inputs]
 
-    def train_set(self, inputs, targets, epoch=1, with_cost=False):
+    def train_set(self, inputs, targets, epoch=1, with_cost=False, print_progress=True):
         percent = 0
         costs = []
         for i in range(epoch):
             while i / epoch > percent:
-                print(int(np.round(percent * 100)), "percent done")
+                if print_progress:
+                    print(int(np.round(percent * 100)), "percent done")
                 percent += .1
             inputs, targets = NeuralNetwork.shuffle(inputs, targets)
             for inp, target in zip(inputs, targets):
                 self.train(inp, target)
             costs.append(self.cost(inputs, targets))
-        print("100 percent done")
+        if print_progress:
+            print("100 percent done")
         return costs if len(costs) > 0 else None
 
     def evaluate_classification(self, inputs, targets):

@@ -26,7 +26,9 @@ def preprocess(data_orig):
             del data[i]
             i -= 1
             continue
-        if d[1] in ['Waitlisted', 'Deferred'] or 'Admit' in d[1] or 'Accept' in d[1]:
+        if d[1] in ['Waitlisted']:
+            data[i][1] = 'Denied'
+        if d[1] in ['Deferred'] or 'Admit' in d[1] or 'Accept' in d[1]:
             data[i][1] = 'Accepted'
         if d[0] == "PRI":
             data[i][0] = "EA"
@@ -74,8 +76,8 @@ def preprocess(data_orig):
         i = y_orig.index(max(y_orig))
         return results[i], soft_max(i, y_orig)
 
-    for i in range(0, 37, 1):
-        for j in np.arange(0, 5, 1):
+    for i in range(37):
+        for j in range(6):
             inp = in_func([np.random.choice(types), str(j), '-', str(i), str(np.random.choice(years))])
             r = "Denied"
             r1 = gpas.index(min(gpas, key=lambda x: np.abs(j - x)))

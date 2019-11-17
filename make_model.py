@@ -15,37 +15,40 @@ dataset = None
 
 
 # Config
-save = False
+save = True
 plot = True
 use_tf = False
 tag = ""
 
 # Hyperparameters
-epoch = 10
+epoch = 100
 hidden_layers = 2
 hidden_nodes = 6
+activation = 'sigmoid'
 
 names = ['Cornell', 'GeorgiaTech', 'Illinois', 'UMD', 'UMich']
-college_name = 'UMD'
+college_name = 'UMich'
 
 datasets = {}
 
 load_data(college_name, datasets)
 
 results, in_func, out_func = pp.preprocess(datasets[college_name])
+input_dim = len(results[0][0])
+output_dim = len(results[0][1])
 
-train_data, cross_validation_data, test_data = split_data(results)
+train_data, cross_validation_data, test_data = split_data(results, validation_split=0)
 
 nn = None
 
 if use_tf:
-    nn = make_tf_nn(hidden_layers, hidden_nodes, len(results[0][0]), len(results[0][1]))
+    nn = make_tf_nn(hidden_layers, hidden_nodes, activation, input_dim, output_dim)
     nn.fit(np.array([pp.to_row(r[0]) for r in train_data], "float32"), np.array([pp.to_row(r[1]) for r in train_data], "float32"), epochs=epoch)
-    print(nn.evaluate(np.array([pp.to_row(r[0]) for r in cross_validation_data], "float32"), np.array([pp.to_row(r[1]) for r in cross_validation_data], "float32")))
+    print(nn.evaluate(np.array([pp.to_row(r[0]) for r in test_data], "float32"), np.array([pp.to_row(r[1]) for r in test_data], "float32")))
 else:
-    nn = make_nn(hidden_layers, hidden_nodes, len(results[0][0]), len(results[0][1]))
+    nn = make_nn(hidden_layers, hidden_nodes, activation, input_dim, output_dim)
     costs = nn.train_set([pp.to_column(r[0]) for r in train_data], [pp.to_column(r[1]) for r in train_data], epoch, plot)
-    print(nn.evaluate_classification([pp.to_column(r[0]) for r in cross_validation_data], [pp.to_column(r[1]) for r in cross_validation_data]))
+    print(nn.evaluate_classification([pp.to_column(r[0]) for r in test_data], [pp.to_column(r[1]) for r in test_data]))
 
 if plot and not use_tf:
     x = range(epoch)
