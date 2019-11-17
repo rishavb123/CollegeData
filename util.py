@@ -33,6 +33,10 @@ def unpack_dna(dna):
     activation = activations[dna[3]]
     return epoch, hidden_layers, hidden_nodes, activation
 
+def dict_dna(dna):
+    epoch, hidden_layers, hidden_nodes, activation = unpack_dna(dna)
+    return {"epoch": epoch, "hidden_layers": hidden_layers, "hidden_nodes": hidden_nodes, "activation": activation}
+
 def make_tf_nn(hidden_layers, hidden_nodes, activation, input_dim, output_dim):
     nn = tf.keras.models.Sequential()
     first_layer = True
