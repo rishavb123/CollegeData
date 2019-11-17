@@ -76,13 +76,28 @@ def preprocess(data_orig):
         i = y_orig.index(max(y_orig))
         return results[i], soft_max(i, y_orig)
 
+    gpas = np.array(gpas)
+    acts = np.array(acts)
+    parallel_results = np.array(parallel_results)
+
     for i in range(37):
         for j in range(6):
             inp = in_func([np.random.choice(types), str(j), '-', str(i), str(np.random.choice(years))])
             r = "Denied"
-            r1 = gpas.index(min(gpas, key=lambda x: np.abs(j - x)))
-            r2 = acts.index(min(acts, key=lambda x: np.abs(i - x)))
-            if parallel_results[r1] == "Accepted" and parallel_results[r2] == "Accepted":
+            r1 = np.where(gpas == min(gpas, key=lambda x: np.abs(j-x)))
+            r2 = np.where(acts == min(acts, key=lambda x: np.abs(i-x)))
+            # print('-------------------------------------------------------------------')
+            # print("GPA", j, r1, gpas[r1[0]], acts[r1[0]])
+            # print("ACT", i, r2, acts[r2[0]])
+            # # a1, b1 = np.unique(parallel_results[r1], return_counts=True)
+            # # a2, b2 = np.unique(parallel_results[r2], return_counts=True)
+            dist1 = np.abs(i - acts[r1])
+            dist2 = np.abs(j - gpas[r2])
+            # print("distances(in act) gpa", dist1)
+            # print("distances(in gpa) act", dist2)
+            # print("Results GPA", parallel_results[r1][np.argmin(dist1)])
+            # print("Results ACT", parallel_results[r2][np.argmin(dist2)])
+            if parallel_results[r1][np.argmin(dist1)] == "Accepted" and parallel_results[r2][np.argmin(dist2)] == "Accepted":
                 r = "Accepted"
             out = one_hot(r, results)
             result.append((inp, out))
@@ -96,7 +111,7 @@ def preprocess(data_orig):
 
     a = []
     i = 0
-    while count.index(min(count)) != count.index(max(count)):
+    while min(count) != max(count):
         if i >= len(result):
             i = 0
         if result[i][1].index(max(result[i][1])) == count.index(min(count)):
@@ -105,13 +120,6 @@ def preprocess(data_orig):
         i += 1
 
     result.extend(a)
-
-    count = np.zeros_like(result[0][1])
-
-    for r in result:
-        count += np.array(r[1])
-
-    count = count.tolist()
 
     return result, in_func, out_func
 
