@@ -97,6 +97,24 @@ class NeuralNetwork:
                 print("Hit nan; out:", max(out), "tar:", max(tar))
         return [self.cost(inputs, targets)[0], correct / len(outputs)] # cost, accuracy
 
+    def create_learning_curves(self, inputs, targets, test_inputs, test_targets, epoch=1, print_progress=True):
+        percent = 0
+        costs = []
+        test_costs = []
+        for i in range(epoch):
+            while i / epoch > percent:
+                if print_progress:
+                    print(int(np.round(percent * 100)), "percent done")
+                percent += .1
+            inputs, targets = NeuralNetwork.shuffle(inputs, targets)
+            for inp, target in zip(inputs, targets):
+                self.train(inp, target)
+            costs.append(self.cost(inputs, targets))
+            test_costs.append(self.cost(test_inputs, test_targets))
+        if print_progress:
+            print("100 percent done")
+        return costs, test_costs
+
     def evaluate_regression(self, inputs, targets):
         return self.cost(inputs, targets) # cost
     

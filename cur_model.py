@@ -17,7 +17,7 @@ for r, d, f in os.walk(optimized_path):
     for file in f:
         optimized_models.append(os.path.join(r, file))
 
-model_file = "./optimized_models/model-GeorgiaTech-92-18, 1, 2, 1-1574021463.pkl"
+model_file = "./optimized_models/model-Cornell-88-14, 2, 7, 1-1574022983.pkl"
 
 
 def find_model(name):
