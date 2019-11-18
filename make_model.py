@@ -28,7 +28,7 @@ activation = 'sigmoid'
 # alpha = 0.1
 
 names = ['Cornell', 'GeorgiaTech', 'Illinois', 'UMD', 'UMich']
-college_name = 'UMich'
+college_name = 'Illinois'
 
 datasets = {}
 
